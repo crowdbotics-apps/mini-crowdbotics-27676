@@ -7,4 +7,4 @@ postgres-data/
 .devlog.md
 .idea/
 .coverage
-database_test-
+database_test
