@@ -6,3 +6,5 @@ staticfiles/
 postgres-data/
 .devlog.md
 .idea/
+.coverage
+database_test
