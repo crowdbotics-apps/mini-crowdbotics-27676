@@ -3,7 +3,7 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     ListAPIView,
-    RetrieveAPIView,
+    RetrieveAPIView, RetrieveUpdateAPIView,
 )
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -65,21 +65,10 @@ class PlanRetrieveAPIView(RetrieveAPIView):
     serializer_class = PlanSerializer
 
 
-class SubscriptionRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
+class SubscriptionRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     queryset = Subscription.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = SubscriptionSerializer
-
-    def destroy(self, request, *args, **kwargs):
-        """
-        Delete a Subscription.
-
-        Sets subscription.active to True.
-        """
-        subscription_id = kwargs.get("pk")
-        subscription = Subscription.objects.get(id=subscription_id)
-        subscription.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class SubscriptionListCreateAPIView(ListCreateAPIView):

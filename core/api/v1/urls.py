@@ -5,7 +5,7 @@ from core.api.v1.views import (
     AppReadUpdateDeleteAPIView,
     PlanListAPIView,
     PlanRetrieveAPIView,
-    SubscriptionRetrieveUpdateDestroyAPIView,
+    SubscriptionRetrieveUpdateAPIView,
     SubscriptionListCreateAPIView,
 )
 
@@ -15,5 +15,8 @@ urlpatterns = [
     path("plans/", PlanListAPIView.as_view()),
     path("plans/<int:pk>/", PlanRetrieveAPIView.as_view()),
     path("subscriptions/", SubscriptionListCreateAPIView.as_view()),
-    path("subscriptions/<int:pk>/", SubscriptionRetrieveUpdateDestroyAPIView.as_view()),
+    path(
+        "subscriptions/<int:pk>/",
+        SubscriptionRetrieveUpdateAPIView.as_view()
+    ),
 ]
