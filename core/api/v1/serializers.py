@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from core.models import App, AppTypeChoices, AppFrameWorkChoices, Plan
+from core.models import App, AppTypeChoices, AppFrameWorkChoices, Plan, \
+    Subscription
 
 
 class AppSerializer(serializers.ModelSerializer):
@@ -54,3 +55,23 @@ class PlanSerializer(serializers.ModelSerializer):
         model = Plan
         fields = ["id", "name", "description", "price", "created_at",
                   "updated_at"]
+
+
+class SubscriptionSerializer(serializers.ModelSerializer):
+    app = serializers.IntegerField(
+        required=True,
+    )
+    plan = serializers.IntegerField(
+        required=True,
+    )
+    user = serializers.PrimaryKeyRelatedField(
+        read_only=True,
+        default=serializers.CurrentUserDefault()
+    )
+    active = serializers.BooleanField(required=True)
+
+    class Meta:
+        model = Subscription
+        fields = [
+            "id", "user", "plan", "app", "active", "created_at", "updated_at"
+        ]
