@@ -8,3 +8,4 @@ postgres-data/
 .idea/
 .coverage
 database_test
+*.sqlite3
