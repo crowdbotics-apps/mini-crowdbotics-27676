@@ -160,3 +160,4 @@ def test_create_subscription(
     force_authenticate(request, user=user)
     response = subscription_list_create_view(request)
     assert response.status_code == 201
+    assert response.data["active"] == subscription_payload["active"]
