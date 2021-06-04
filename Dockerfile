@@ -25,4 +25,4 @@ RUN adduser --disabled-password --gecos "" django
 USER django
 
 # Run the web server on port $PORT
-CMD waitress-serve --port=$PORT mini_crowdbotics_27676.wsgi:application
+CMD waitress-serve --port=$PORT config.wsgi:application
