@@ -1,9 +1,9 @@
 from decimal import Decimal
+
 import pytest
 from rest_framework.test import force_authenticate
 
 from users.tests.factories import UserFactory
-
 from core.tests.factories import AppFactory, PlanFactory, \
     SubscriptionFactory
 
