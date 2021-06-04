@@ -21,3 +21,9 @@ class App(TimeStampedModel):
         related_name="apps"
     )
 
+ 
+class Plan(TimeStampedModel):
+    id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=20)
+    description = models.TextField()
+    price = models.DecimalField(decimal_places=2, max_digits=4)
