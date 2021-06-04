@@ -21,7 +21,7 @@ def add_default_plans(apps, schema_editor):
             "name": "Pro",
             "description": "Pro",
             "price": Decimal(25),
-        }
+        },
     ]
     for plan in plans:
         Plan.objects.create(**plan)
@@ -30,12 +30,7 @@ def add_default_plans(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0005_core'),
+        ("core", "0005_core"),
     ]
 
-    operations = [
-        migrations.RunPython(
-            add_default_plans,
-            migrations.RunPython.noop
-        )
-    ]
+    operations = [migrations.RunPython(add_default_plans, migrations.RunPython.noop)]

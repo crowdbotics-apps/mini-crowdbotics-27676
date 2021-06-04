@@ -6,22 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0001_core'),
+        ("core", "0001_core"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Plan',
+            name="Plan",
             fields=[
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('id', models.BigAutoField(primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=20)),
-                ('description', models.TextField()),
-                ('price', models.DecimalField(decimal_places=2, max_digits=4)),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("id", models.BigAutoField(primary_key=True, serialize=False)),
+                ("name", models.CharField(max_length=20)),
+                ("description", models.TextField()),
+                ("price", models.DecimalField(decimal_places=2, max_digits=4)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

@@ -5,9 +5,13 @@ from rest_framework.test import APIRequestFactory
 
 from .factories import AppFactory, PlanFactory, SubscriptionFactory
 from users.tests.factories import UserFactory
-from ..api.v1.views import AppListCreateAPIView, PlanListAPIView, \
-    PlanRetrieveAPIView, SubscriptionRetrieveUpdateDestroyAPIView, \
-    SubscriptionListCreateAPIView
+from ..api.v1.views import (
+    AppListCreateAPIView,
+    PlanListAPIView,
+    PlanRetrieveAPIView,
+    SubscriptionRetrieveUpdateDestroyAPIView,
+    SubscriptionListCreateAPIView,
+)
 
 sys.path.append(os.path.dirname(__file__))
 
@@ -29,11 +33,7 @@ def plan():
 
 @pytest.fixture
 def subscription(app, plan, user):
-    return SubscriptionFactory(
-        app=app,
-        plan=plan,
-        user=user
-    )
+    return SubscriptionFactory(app=app, plan=plan, user=user)
 
 
 @pytest.fixture

@@ -7,13 +7,15 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0003_core'),
+        ("core", "0003_core"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='subscription',
-            name='app',
-            field=models.OneToOneField(null=True, on_delete=django.db.models.deletion.CASCADE, to='core.app'),
+            model_name="subscription",
+            name="app",
+            field=models.OneToOneField(
+                null=True, on_delete=django.db.models.deletion.CASCADE, to="core.app"
+            ),
         ),
     ]

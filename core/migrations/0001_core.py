@@ -16,21 +16,60 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='App',
+            name="App",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=50)),
-                ('description', models.TextField(null=True)),
-                ('type', models.CharField(choices=[(core.models.choices.AppTypeChoices('Web'), 'Web'), (core.models.choices.AppTypeChoices('Mobile'), 'Mobile')], max_length=6)),
-                ('framework', models.CharField(choices=[(core.models.choices.AppFrameWorkChoices('Django'), 'Django'), (core.models.choices.AppFrameWorkChoices('React Native'), 'React Native')], max_length=12)),
-                ('domain_name', models.CharField(max_length=50, null=True)),
-                ('screenshot', models.URLField(null=True)),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='apps', to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("name", models.CharField(max_length=50)),
+                ("description", models.TextField(null=True)),
+                (
+                    "type",
+                    models.CharField(
+                        choices=[
+                            (core.models.choices.AppTypeChoices("Web"), "Web"),
+                            (core.models.choices.AppTypeChoices("Mobile"), "Mobile"),
+                        ],
+                        max_length=6,
+                    ),
+                ),
+                (
+                    "framework",
+                    models.CharField(
+                        choices=[
+                            (
+                                core.models.choices.AppFrameWorkChoices("Django"),
+                                "Django",
+                            ),
+                            (
+                                core.models.choices.AppFrameWorkChoices("React Native"),
+                                "React Native",
+                            ),
+                        ],
+                        max_length=12,
+                    ),
+                ),
+                ("domain_name", models.CharField(max_length=50, null=True)),
+                ("screenshot", models.URLField(null=True)),
+                (
+                    "user",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="apps",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

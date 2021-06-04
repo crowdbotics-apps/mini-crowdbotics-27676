@@ -25,6 +25,5 @@ class PlanFactory(DjangoModelFactory):
 
 
 class SubscriptionFactory(DjangoModelFactory):
-
     class Meta:
         model = Subscription

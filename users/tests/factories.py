@@ -8,6 +8,7 @@ from factory.django import DjangoModelFactory
 
 fake = Faker()
 
+
 class UserFactory(DjangoModelFactory):
 
     username = fake.user_name()

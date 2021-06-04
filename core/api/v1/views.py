@@ -1,10 +1,13 @@
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView, \
-    RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    ListAPIView,
+    RetrieveAPIView,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from core.models import App, Plan, Subscription, AppTypeChoices,\
-    AppFrameWorkChoices
+from core.models import App, Plan, Subscription, AppTypeChoices, AppFrameWorkChoices
 from .serializers import AppSerializer, PlanSerializer, SubscriptionSerializer
 
 
@@ -27,22 +30,20 @@ class AppListCreateAPIView(ListCreateAPIView):
             if type_ not in AppTypeChoices:
                 raise ValueError("Type must be one of: Web, Mobile")
             if framework not in AppFrameWorkChoices:
-                raise ValueError("Framework must be one of: "
-                                 "Django, React Native")
+                raise ValueError("Framework must be one of: " "Django, React Native")
             app = App.objects.create(
                 name=name,
                 description=description,
                 type=type_,
                 framework=framework,
                 domain_name=domain_name,
-                user=user
+                user=user,
             )
             serializer = self.get_serializer(app)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as exception:
             return Response(
-                {"message": exception.args},
-                status=status.HTTP_400_BAD_REQUEST
+                {"message": exception.args}, status=status.HTTP_400_BAD_REQUEST
             )
 
 
@@ -96,15 +97,9 @@ class SubscriptionListCreateAPIView(ListCreateAPIView):
             active = request.data.get("active")
             user = request.user
             subscription = Subscription.objects.create(
-                plan_id=plan_id,
-                app_id=app_id,
-                user_id=user.id,
-                active=active
+                plan_id=plan_id, app_id=app_id, user_id=user.id, active=active
             )
             serializer = self.get_serializer(subscription)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         except Exception as err:
-            return Response(
-                {"message": str(err)},
-                status=status.HTTP_400_BAD_REQUEST
-            )
+            return Response({"message": str(err)}, status=status.HTTP_400_BAD_REQUEST)
