@@ -1,5 +1,6 @@
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, \
+    RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from core.models import App
@@ -34,3 +35,9 @@ class AppListCreateAPIView(ListCreateAPIView):
                 {"message": exception.args},
                 status=status.HTTP_400_BAD_REQUEST
             )
+
+
+class AppReadUpdateDeleteView(RetrieveUpdateDestroyAPIView):
+    queryset = App.objects.all().order_by("-created_at")
+    permission_classes = (IsAuthenticated,)
+    serializer_class = AppSerializer
