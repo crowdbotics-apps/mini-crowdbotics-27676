@@ -1,3 +1,4 @@
+from decimal import Decimal
 import pytest
 from rest_framework.test import force_authenticate
 
@@ -36,3 +37,31 @@ def test_get_apps(app, user, api_request_factory, app_list_create_view):
     assert response.data[0]["type"] == app.type
     assert response.data[0]["domain_name"] == app.domain_name
     assert response.data[0]["framework"] == app.framework
+
+
+def test_list_plans(
+        user,
+        api_request_factory,
+        plan_list_view
+):
+    free_plan = PlanFactory(name="Free", description="free", price=Decimal(0))
+    std_plan = PlanFactory(name="Standard", description="standard",
+                           price=Decimal(10))
+    pro_plan = PlanFactory(name="Pro", description="pro", price=Decimal(25))
+    request = api_request_factory.get("/api/v1/plans/")
+    force_authenticate(request, user=user)
+    response = plan_list_view(request)
+    assert len(response.data) == 6
+
+
+def test_get_plan(
+        user,
+        api_request_factory,
+        plan_retrieve_view,
+        plan
+):
+    request = api_request_factory.get(f"/api/v1/plans/{plan.id}")
+    force_authenticate(request, user=user)
+    response = plan_retrieve_view(request, pk=plan.id)
+    assert response.data["name"] == plan.name
+    assert response.data["id"] == plan.id
