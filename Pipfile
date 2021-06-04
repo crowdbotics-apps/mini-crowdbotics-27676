@@ -32,4 +32,3 @@ pytest = "==6.2.4"
 factory-boy = "==3.2.0"
 pytest-django = "==4.3.0"
 pytest-cov = "*"
-black = {git = "git://github.com/psf/black"}
