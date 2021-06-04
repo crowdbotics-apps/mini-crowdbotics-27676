@@ -30,12 +30,36 @@ def test_post_app(user, api_request_factory, app_list_create_view):
     assert response.data["type"] == app_payload["type"]
 
 
-def test_response_400(user, api_request_factory, app_list_create_view):
+def test_response_400_wrong_type(
+        user,
+        api_request_factory,
+        app_list_create_view
+):
     app_payload = {
         "name": "zing",
         "description": "zing",
-        "type": 0,
+        "type": "IOT",
         "framework": "Web"
+    }
+    request = api_request_factory.post(
+        "/api/v1/apps/",
+        app_payload
+    )
+    force_authenticate(request, user=user)
+    response = app_list_create_view(request)
+    assert response.status_code == 400
+
+
+def test_response_400_wrong_framework(
+        user,
+        api_request_factory,
+        app_list_create_view
+):
+    app_payload = {
+        "name": "zing",
+        "description": "zing",
+        "type": "Mobile",
+        "framework": "Rails"
     }
     request = api_request_factory.post(
         "/api/v1/apps/",
@@ -81,3 +105,58 @@ def test_get_plan(
     response = plan_retrieve_view(request, pk=plan.id)
     assert response.data["name"] == plan.name
     assert response.data["id"] == plan.id
+
+
+def test_delete_subcription(
+        user,
+        subscription_retrieve_update_destroy_view,
+        subscription,
+        api_request_factory):
+    request = api_request_factory.delete(
+        f"/api/v1/subscriptions/{subscription.id}"
+    )
+    force_authenticate(request, user=user)
+    response = subscription_retrieve_update_destroy_view(
+        request, pk=subscription.id
+    )
+    assert response.status_code == 204
+
+
+def test_partial_update_subcription(
+    user,
+    subscription_retrieve_update_destroy_view,
+    subscription,
+    api_request_factory,
+):
+    payload = {"active": False}
+    request = api_request_factory.patch(
+        f"/api/v1/subscriptions{subscription.id}",
+        payload
+    )
+    force_authenticate(request, user=user)
+    response = subscription_retrieve_update_destroy_view(
+        request,
+        pk=subscription.id
+    )
+    assert response.data["active"] == payload["active"]
+
+
+def test_create_subscription(
+        app,
+        user,
+        plan,
+        api_request_factory,
+        subscription_list_create_view
+):
+    subscription_payload = {
+        "plan": plan.id,
+        "app": app.id,
+        "active": True
+    }
+    request = api_request_factory.post(
+        "/api/v1/subscriptions/",
+        subscription_payload
+    )
+    force_authenticate(request, user=user)
+    response = subscription_list_create_view(request)
+    assert response.status_code == 201

@@ -6,7 +6,8 @@ from rest_framework.test import APIRequestFactory
 from .factories import AppFactory, PlanFactory, SubscriptionFactory
 from users.tests.factories import UserFactory
 from ..api.v1.views import AppListCreateAPIView, PlanListAPIView, \
-    PlanRetrieveAPIView
+    PlanRetrieveAPIView, SubscriptionRetrieveUpdateDestroyAPIView, \
+    SubscriptionListCreateAPIView
 
 sys.path.append(os.path.dirname(__file__))
 
@@ -54,3 +55,12 @@ def plan_list_view():
 def plan_retrieve_view():
     return PlanRetrieveAPIView.as_view()
 
+
+@pytest.fixture
+def subscription_retrieve_update_destroy_view():
+    return SubscriptionRetrieveUpdateDestroyAPIView.as_view()
+
+
+@pytest.fixture
+def subscription_list_create_view():
+    return SubscriptionListCreateAPIView.as_view()
