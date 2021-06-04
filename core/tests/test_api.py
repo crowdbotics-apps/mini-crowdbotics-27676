@@ -30,6 +30,22 @@ def test_post_app(user, api_request_factory, app_list_create_view):
     assert response.data["type"] == app_payload["type"]
 
 
+def test_response_400(user, api_request_factory, app_list_create_view):
+    app_payload = {
+        "name": "zing",
+        "description": "zing",
+        "type": 0,
+        "framework": "Web"
+    }
+    request = api_request_factory.post(
+        "/api/v1/apps/",
+        app_payload
+    )
+    force_authenticate(request, user=user)
+    response = app_list_create_view(request)
+    assert response.status_code == 400
+
+
 def test_get_apps(app, user, api_request_factory, app_list_create_view):
     request = api_request_factory.get("/api/v1/apps/")
     force_authenticate(request, user=user)
