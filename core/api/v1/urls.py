@@ -15,7 +15,7 @@ urlpatterns = [
         AppReadUpdateDeleteAPIView.as_view()
     ),
     path(
-        'plans',
+        'plans/',
         PlanListAPIView.as_view()
     ),
     path(
