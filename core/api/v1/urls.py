@@ -1,7 +1,8 @@
 from django.urls import path
 
 from core.api.v1.views import AppListCreateAPIView, AppReadUpdateDeleteAPIView, \
-    PlanListAPIView, PlanRetrieveAPIView
+    PlanListAPIView, PlanRetrieveAPIView, \
+    SubscriptionRetrieveUpdateDestroyAPIView, SubscriptionListCreateAPIView
 
 urlpatterns = [
     path(
@@ -20,5 +21,13 @@ urlpatterns = [
     path(
         'plans/<int:pk>/',
         PlanRetrieveAPIView.as_view()
-    )
+    ),
+    path(
+        'subscriptions/',
+        SubscriptionListCreateAPIView.as_view()
+    ),
+    path(
+        'subscriptions/<int:pk>/',
+        SubscriptionRetrieveUpdateDestroyAPIView.as_view()
+    ),
 ]
