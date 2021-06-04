@@ -79,15 +79,6 @@ def test_get_plan(user, api_request_factory, plan_retrieve_view, plan):
     assert response.data["id"] == plan.id
 
 
-def test_delete_subcription(
-    user, subscription_retrieve_update_destroy_view, subscription, api_request_factory
-):
-    request = api_request_factory.delete(f"/api/v1/subscriptions/{subscription.id}")
-    force_authenticate(request, user=user)
-    response = subscription_retrieve_update_destroy_view(request, pk=subscription.id)
-    assert response.status_code == 204
-
-
 def test_partial_update_subcription(
     user,
     subscription_retrieve_update_destroy_view,

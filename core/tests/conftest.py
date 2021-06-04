@@ -9,7 +9,7 @@ from ..api.v1.views import (
     AppListCreateAPIView,
     PlanListAPIView,
     PlanRetrieveAPIView,
-    SubscriptionRetrieveUpdateDestroyAPIView,
+    SubscriptionRetrieveUpdateAPIView,
     SubscriptionListCreateAPIView,
 )
 
@@ -58,7 +58,7 @@ def plan_retrieve_view():
 
 @pytest.fixture
 def subscription_retrieve_update_destroy_view():
-    return SubscriptionRetrieveUpdateDestroyAPIView.as_view()
+    return SubscriptionRetrieveUpdateAPIView.as_view()
 
 
 @pytest.fixture
