@@ -2,7 +2,7 @@ import os
 import sys
 import pytest
 
-from .factories import AppFactory
+from .factories import AppFactory, PlanFactory, SubscriptionFactory
 from users.tests.factories import UserFactory
 
 
@@ -17,3 +17,17 @@ def user():
 @pytest.fixture
 def app(user):
     return AppFactory(user=user)
+
+
+@pytest.fixture
+def plan():
+    return PlanFactory.create()
+
+
+@pytest.fixture
+def subscription(app, plan, user):
+    return SubscriptionFactory(
+        app=app,
+        plan=plan,
+        user=user
+    )

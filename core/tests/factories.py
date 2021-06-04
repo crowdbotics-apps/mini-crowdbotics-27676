@@ -1,6 +1,6 @@
 from decimal import Decimal
 from factory.django import DjangoModelFactory
-from core.models.platform import App
+from core.models.platform import App, Plan, Subscription
 
 
 class AppFactory(DjangoModelFactory):
@@ -22,3 +22,9 @@ class PlanFactory(DjangoModelFactory):
 
     class Meta:
         model = Plan
+
+
+class SubscriptionFactory(DjangoModelFactory):
+
+    class Meta:
+        model = Subscription
