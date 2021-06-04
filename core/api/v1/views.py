@@ -1,10 +1,10 @@
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, \
-    RetrieveUpdateDestroyAPIView
+    RetrieveUpdateDestroyAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from core.models import App
-from .serializers import AppSerializer
+from core.models import App, Plan
+from .serializers import AppSerializer, PlanSerializer
 
 
 class AppListCreateAPIView(ListCreateAPIView):
@@ -37,7 +37,20 @@ class AppListCreateAPIView(ListCreateAPIView):
             )
 
 
-class AppReadUpdateDeleteView(RetrieveUpdateDestroyAPIView):
+class AppReadUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
     queryset = App.objects.all().order_by("-created_at")
     permission_classes = (IsAuthenticated,)
     serializer_class = AppSerializer
+
+
+class PlanListAPIView(ListAPIView):
+    queryset = Plan.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PlanSerializer
+
+
+class PlanRetrieveAPIView(RetrieveAPIView):
+    queryset = Plan.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = PlanSerializer
+

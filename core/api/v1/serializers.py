@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from core.models import App, AppTypeChoices, AppFrameWorkChoices
+from core.models import App, AppTypeChoices, AppFrameWorkChoices, Plan
 
 
 class AppSerializer(serializers.ModelSerializer):
@@ -34,3 +34,23 @@ class AppSerializer(serializers.ModelSerializer):
                   "domain_name", "screenshot", "subscription", "user",
                   "created_at", "updated_at",
                   )
+
+
+class PlanSerializer(serializers.ModelSerializer):
+    name = serializers.CharField(
+        max_length=20,
+        min_length=1,
+        required=True
+    )
+    description = serializers.CharField(min_length=1)
+    price = serializers.DecimalField(
+        coerce_to_string=True,
+        decimal_places=2,
+        max_digits=4,
+        required=False
+    )
+
+    class Meta:
+        model = Plan
+        fields = ["id", "name", "description", "price", "created_at",
+                  "updated_at"]

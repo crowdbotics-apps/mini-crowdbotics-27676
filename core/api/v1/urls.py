@@ -1,6 +1,7 @@
 from django.urls import path
 
-from core.api.v1.views import AppListCreateAPIView, AppReadUpdateDeleteView
+from core.api.v1.views import AppListCreateAPIView, AppReadUpdateDeleteAPIView, \
+    PlanListAPIView, PlanRetrieveAPIView
 
 urlpatterns = [
     path(
@@ -10,6 +11,14 @@ urlpatterns = [
     ),
     path(
         'apps/<int:pk>/',
-        AppReadUpdateDeleteView.as_view()
+        AppReadUpdateDeleteAPIView.as_view()
     ),
+    path(
+        'plans',
+        PlanListAPIView.as_view()
+    ),
+    path(
+        'plans/<int:pk>/',
+        PlanRetrieveAPIView.as_view()
+    )
 ]
