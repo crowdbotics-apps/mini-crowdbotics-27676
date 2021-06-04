@@ -14,6 +14,9 @@ class AppListCreateAPIView(ListCreateAPIView):
     serializer_class = AppSerializer
 
     def create(self, request, *args, **kwargs):
+        """
+        Create an App owned by the currenly authenticated user.
+        """
         name = request.data.get("name")
         description = request.data.get("description")
         type_ = request.data.get("type")
@@ -67,6 +70,11 @@ class SubscriptionRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     serializer_class = SubscriptionSerializer
 
     def destroy(self, request, *args, **kwargs):
+        """
+        Delete a Subscription.
+
+        Sets subscription.active to True.
+        """
         subscription_id = kwargs.get("pk")
         subscription = Subscription.objects.get(id=subscription_id)
         subscription.delete()
@@ -79,15 +87,24 @@ class SubscriptionListCreateAPIView(ListCreateAPIView):
     serializer_class = SubscriptionSerializer
 
     def create(self, request, *args, **kwargs):
-        plan_id = request.data.get("plan")
-        app_id = request.data.get("app")
-        active = request.data.get("active")
-        user = request.user
-        subscription = Subscription.objects.create(
-            plan_id=plan_id,
-            app_id=app_id,
-            user_id=user.id,
-            active=active
-        )
-        serializer = self.get_serializer(subscription)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        """
+        Create a Subcscription and associate it with an App and a Plan.
+        """
+        try:
+            plan_id = request.data.get("plan")
+            app_id = request.data.get("app")
+            active = request.data.get("active")
+            user = request.user
+            subscription = Subscription.objects.create(
+                plan_id=plan_id,
+                app_id=app_id,
+                user_id=user.id,
+                active=active
+            )
+            serializer = self.get_serializer(subscription)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as err:
+            return Response(
+                {"message": str(err)},
+                status=status.HTTP_400_BAD_REQUEST
+            )

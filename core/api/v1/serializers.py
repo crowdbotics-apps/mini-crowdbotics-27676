@@ -25,7 +25,7 @@ class AppSerializer(serializers.ModelSerializer):
         required=False
     )
     screenshot = serializers.URLField(read_only=True, allow_blank=True)
-    subscription = serializers.IntegerField(
+    subscription = serializers.PrimaryKeyRelatedField(
         read_only=True,
     )
 
