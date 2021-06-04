@@ -18,12 +18,32 @@ class App(TimeStampedModel):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name="apps"
+        related_name="apps",
+        editable=False
     )
 
- 
+
 class Plan(TimeStampedModel):
-    id = models.BigAutoField(primary_key=True)
     name = models.CharField(max_length=20)
     description = models.TextField()
     price = models.DecimalField(decimal_places=2, max_digits=4)
+
+
+class Subscription(TimeStampedModel):
+    app = models.OneToOneField(App, on_delete=models.SET_NULL, null=True)
+    active = models.BooleanField(default=True)
+    plan = models.ForeignKey(
+        Plan,
+        on_delete=models.CASCADE,
+        related_name="subscriptions"
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="subscriptions"
+    )
+
+    def delete(self, *args, **kwargs):
+        self.active = False
+        self.app = None
+        self.save()
