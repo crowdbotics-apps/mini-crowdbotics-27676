@@ -6,7 +6,7 @@ name = "pypi"
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.6"
 
 [packages]
 cryptography = "<3.4"
@@ -32,4 +32,3 @@ pytest = "==6.2.4"
 factory-boy = "==3.2.0"
 pytest-django = "==4.3.0"
 pytest-cov = "*"
-ipython = "*"
