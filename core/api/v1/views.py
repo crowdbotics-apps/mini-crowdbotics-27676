@@ -66,8 +66,28 @@ class SubscriptionRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
     serializer_class = SubscriptionSerializer
 
+    def destroy(self, request, *args, **kwargs):
+        subscription_id = kwargs.get("pk")
+        subscription = Subscription.objects.get(id=subscription_id)
+        subscription.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class SubscriptionListCreateAPIView(ListCreateAPIView):
     queryset = Subscription.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = SubscriptionSerializer
+
+    def create(self, request, *args, **kwargs):
+        plan_id = request.data.get("plan")
+        app_id = request.data.get("app")
+        active = request.data.get("active")
+        user = request.user
+        subscription = Subscription.objects.create(
+            plan_id=plan_id,
+            app_id=app_id,
+            user_id=user.id,
+            active=active
+        )
+        serializer = self.get_serializer(subscription)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

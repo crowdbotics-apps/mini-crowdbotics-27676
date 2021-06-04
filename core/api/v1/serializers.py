@@ -58,11 +58,13 @@ class PlanSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionSerializer(serializers.ModelSerializer):
-    app = serializers.IntegerField(
+    app = serializers.PrimaryKeyRelatedField(
         required=True,
+        queryset=App.objects.all()
     )
-    plan = serializers.IntegerField(
+    plan = serializers.PrimaryKeyRelatedField(
         required=True,
+        queryset=Plan.objects.all()
     )
     user = serializers.PrimaryKeyRelatedField(
         read_only=True,
