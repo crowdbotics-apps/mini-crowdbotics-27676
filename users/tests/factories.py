@@ -1,21 +1,22 @@
 from typing import Any, Sequence
 
 from django.contrib.auth import get_user_model
-from factory import Faker, post_generation
+from factory import post_generation
+from faker import Faker
 from factory.django import DjangoModelFactory
 
 
+fake = Faker()
 
 class UserFactory(DjangoModelFactory):
 
-    username = Faker("user_name")
-    email = Faker("email")
-    name = Faker("name")
+    username = fake.user_name()
+    email = fake.email()
+    name = fake.name()
 
     @post_generation
     def password(self, create: bool, extracted: Sequence[Any], **kwargs):
-        password = Faker(
-            "password",
+        password = fake.password(
             length=42,
             special_chars=True,
             digits=True,
