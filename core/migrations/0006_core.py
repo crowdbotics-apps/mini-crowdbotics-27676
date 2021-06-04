@@ -6,7 +6,6 @@ from decimal import Decimal
 
 def add_default_plans(apps, schema_editor):
     Plan = apps.get_model("core.Plan")
-    Plan.objects.all().delete()  # ensure no plans exist
     plans = [
         {
             "name": "Free",
