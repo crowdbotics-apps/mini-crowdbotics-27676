@@ -52,6 +52,24 @@ def test_response_400_wrong_framework(user, api_request_factory, app_list_create
     assert response.status_code == 400
 
 
+def test_create_app_with_wrong_choices(user, api_request_factory, app_list_create_view):
+    app_payload = {
+        "name": "Moon",
+        "description": "HODL",
+        "type": "Mobile",
+        "framework": "Django",
+    }
+    request = api_request_factory.post("/api/v1/apps/", app_payload)
+    force_authenticate(request, user=user)
+    response = app_list_create_view(request)
+    assert response.status_code == 400
+    assert (
+        response.data["message"] == "Invalid combination of type and "
+        "framework. Allowed choices are "
+        "[Web, Django] or[Mobile, React Native]"
+    )
+
+
 def test_get_apps(app, user, api_request_factory, app_list_create_view):
     request = api_request_factory.get("/api/v1/apps/")
     force_authenticate(request, user=user)
